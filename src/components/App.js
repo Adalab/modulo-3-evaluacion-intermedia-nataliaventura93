@@ -9,7 +9,8 @@ import '../styles/App.scss';
 function App() {
   const [quoteList, setquoteList] = useState([]);
   const [quoteSearch, setQuoteSearch] = useState('');
-
+  const [characterSelect, setCharacterSelect] = useState('all');
+  
   useEffect(() => {
     fetch(
       'https://beta.adalab.es/curso-intensivo-fullstack-recursos/apis/quotes-friends-tv-v1/quotes.json'
@@ -24,10 +25,23 @@ function App() {
     setQuoteSearch(ev.target.value);
   };
 
+  const handleCharacterSelect = (ev) => {
+    setCharacterSelect(ev.target.value);
+  }
+
   const renderQuoteList = () => {
     return quoteList.filter((eachSearch) =>
-      eachSearch.quote.includes(quoteSearch)
+      eachSearch.quote.toLowerCase().includes(quoteSearch.toLowerCase())
     )
+    .filter((eachSelect) => {
+    if (characterSelect === 'all') {
+      return eachSelect
+    } else {
+      eachSelect.character === characterSelect);
+    }
+        
+      
+    }
     .map((eachQuote, index) => (
       <li key={index}>
         <p>
@@ -51,16 +65,15 @@ function App() {
           onInput={handleQuoteSearch}
         />
         <label htmlFor="character">Filtrar por personaje</label>
-        <select name="select" id="character">
-          <option value="all" defaultValue>
-            Todos
-          </option>
-          <option value="R">Ross</option>
-          <option value="M">Monica</option>
-          <option value="M">Joey</option>
-          <option value="M">Phoebe</option>
-          <option value="M">Chandler</option>
-          <option value="M">Rachel</option>
+        <select name="select" id="character" value={characterSelect}
+          onChange={handleCharacterSelect}>
+          <option value="all">Todos</option>
+          <option value="Ross">Ross</option>
+          <option value="Monica">Monica</option>
+          <option value="Joey">Joey</option>
+          <option value="Phoebe">Phoebe</option>
+          <option value="Chandler">Chandler</option>
+          <option value="Rachel">Rachel</option>
         </select>
       </form>
       <ul>{renderQuoteList()}</ul>
