@@ -1,15 +1,12 @@
-//seccion import
 
-//.- de React, de archivos propios, Sass, Images
 import { useState, useEffect } from 'react';
-//import '../services/api.js';
 import '../styles/App.scss';
 
-/*  COMPONENTE */
 function App() {
   const [quoteList, setquoteList] = useState([]);
   const [quoteSearch, setQuoteSearch] = useState('');
   const [characterSelect, setCharacterSelect] = useState('all');
+  const[newQuote, setNewQuote] = useState({});
   
   useEffect(() => {
     fetch(
@@ -29,6 +26,14 @@ function App() {
     setCharacterSelect(ev.target.value);
   }
 
+  const handleNewQuote = (ev) => {
+    setNewQuote({...newQuote, [ev.target.name]: ev.target.value})
+  }
+
+  const handleClick = (ev) => {
+    ev.preventDefault();
+    setquoteList([...quoteList, newQuote]);
+  }
   const renderQuoteList = () => {
     return quoteList.filter((eachSearch) =>
       eachSearch.quote.toLowerCase().includes(quoteSearch.toLowerCase())
@@ -78,10 +83,10 @@ function App() {
       <form>
         <h2>Añadir una nueva frase</h2>
         <label>Frase</label>
-        <input type="text" />
-        <label htmlFor="">Personaje</label>
-        <input type="text" />
-        <input type="submit" value="Añadir" />
+        <input type="text" name="quote" onInput={handleNewQuote} value={newQuote.quote}/>
+        <label>Personaje</label>
+        <input type="text" name="character" onInput={handleNewQuote} value={newQuote.character}/>
+        <button onClick={handleClick}>Añadir una nueva frase</button>
       </form>
     </div>
   );
