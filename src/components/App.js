@@ -1,14 +1,34 @@
 //seccion import
 
 //.- de React, de archivos propios, Sass, Images
+import { useState, useEffect } from 'react';
+//import '../services/api.js';
 import '../styles/App.scss';
 
 /*  COMPONENTE */
 function App() {
-  /*
-    Variables de estado, funciones manejadoras de eventos, variables, funcion handle 
-  */
-  /* RETURN --> HTML */
+  const [quoteList, setquoteList] = useState([]);
+  
+
+  
+  useEffect(() => {
+    fetch('https://beta.adalab.es/curso-intensivo-fullstack-recursos/apis/quotes-friends-tv-v1/quotes.json') 
+      .then((response) => response.json())
+      .then((response) => {
+        setquoteList(response);
+      });
+      
+  }, []);
+
+  const renderQuoteList = () => {
+    return quoteList.map((eachQuote, index) => (
+      <li key={index}>
+          <p>{eachQuote.quote}<span>{eachQuote.character}</span></p>
+        </li>
+    ))
+    
+  }
+  
   return (
     <div>
       <h1>Frases de Friends</h1>
@@ -29,9 +49,7 @@ function App() {
         </select>
       </form>
       <ul>
-        <li>
-          <p>Frase<span>Personaje</span></p>
-        </li>
+        {renderQuoteList()}
       </ul>
       <form>
         <h2>Añadir una nueva frase</h2>
