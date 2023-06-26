@@ -37,11 +37,9 @@ function App() {
     if (characterSelect === 'all') {
       return eachSelect
     } else {
-      eachSelect.character === characterSelect);
+      return eachSelect.character === characterSelect;
     }
-        
-      
-    }
+    })
     .map((eachQuote, index) => (
       <li key={index}>
         <p>
