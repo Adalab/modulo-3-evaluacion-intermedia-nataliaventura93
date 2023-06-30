@@ -1,15 +1,12 @@
-//seccion import
 
-//.- de React, de archivos propios, Sass, Images
 import { useState, useEffect } from 'react';
-//import '../services/api.js';
 import '../styles/App.scss';
 
-/*  COMPONENTE */
 function App() {
   const [quoteList, setquoteList] = useState([]);
   const [quoteSearch, setQuoteSearch] = useState('');
   const [characterSelect, setCharacterSelect] = useState('all');
+  const [newQuote, setNewQuote] = useState({});
   
   useEffect(() => {
     fetch(
@@ -27,6 +24,15 @@ function App() {
 
   const handleCharacterSelect = (ev) => {
     setCharacterSelect(ev.target.value);
+  }
+
+  const handleNewQuote = (ev) => {
+    setNewQuote({...newQuote, [ev.target.name]: ev.target.value})
+  }
+
+  const handleClick = (ev) => {
+    ev.preventDefault();
+    setquoteList([...quoteList, newQuote]);
   }
 
   const renderQuoteList = () => {
@@ -52,11 +58,14 @@ function App() {
 
   return (
     <div>
+      <header>
       <h1>Frases de Friends</h1>
+      </header>
       <form>
         <label htmlFor="quote">Filtrar por frase</label>
         <input
           type="text"
+          for="quote"
           name="quote"
           id="quote"
           value={quoteSearch}
@@ -77,11 +86,11 @@ function App() {
       <ul>{renderQuoteList()}</ul>
       <form>
         <h2>Añadir una nueva frase</h2>
-        <label>Frase</label>
-        <input type="text" />
-        <label htmlFor="">Personaje</label>
-        <input type="text" />
-        <input type="submit" value="Añadir" />
+        <label htmlFor="newQuote">Frase</label>
+        <input id="newQuote"type="text" name="quote" onInput={handleNewQuote} value={newQuote.quote}/>
+        <label htmlFor="newCharacter">Personaje</label>
+        <input id="newCharacter" type="text" name="character" onInput={handleNewQuote} value={newQuote.character}/>
+        <input type="submit" value="Añadir" onClick={handleClick} />
       </form>
     </div>
   );
