@@ -47,7 +47,7 @@ function App() {
     }
     })
     .map((eachQuote, index) => (
-      <li key={index}>
+      <li key={index} className='list__element'>
         <p>
           {eachQuote.quote}
           <span>{eachQuote.character}</span>
@@ -58,20 +58,21 @@ function App() {
 
   return (
     <div>
-      <header>
+      <header className='headerTitle'>
       <h1>Frases de Friends</h1>
       </header>
-      <form>
-        <label htmlFor="quote">Filtrar por frase</label>
+      <form className='form'>
+        <label htmlFor="quote" className='form__label'>Filtrar por frase</label>
         <input
           type="text"
           for="quote"
           name="quote"
           id="quote"
+          className='form__input'
           value={quoteSearch}
           onInput={handleQuoteSearch}
         />
-        <label htmlFor="character">Filtrar por personaje</label>
+        <label htmlFor="character" className='form__label'>Filtrar por personaje</label>
         <select name="select" id="character" value={characterSelect}
           onChange={handleCharacterSelect}>
           <option value="all">Todos</option>
@@ -83,7 +84,7 @@ function App() {
           <option value="Rachel">Rachel</option>
         </select>
       </form>
-      <ul>{renderQuoteList()}</ul>
+      <ul className='list'>{renderQuoteList()}</ul>
       <form>
         <h2>Añadir una nueva frase</h2>
         <label htmlFor="newQuote">Frase</label>

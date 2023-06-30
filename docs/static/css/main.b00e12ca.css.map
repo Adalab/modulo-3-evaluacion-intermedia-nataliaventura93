@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.b00e12ca.css","mappings":"AAAA,aACI,SAAU","sources":["styles/_Header.scss"],"sourcesContent":[".headerTitle {\n    color: red;\n}"],"names":[],"sourceRoot":""}
